@@ -95,10 +95,10 @@ export default function ProjectsTable({ isEmpty, data }: Props) {
 							</TableCell>
 							<TableCell title={item.developer.name}>{truncate(item.developer.name, 15)}</TableCell>
 							<TableCell>
-								{item.currency.symbol} {item.funding_goal.toLocaleString()}
+								{item.currency.symbol} {item.funding_goal?.toLocaleString() ?? 0}
 							</TableCell>
 							<TableCell>
-								{item.currency.symbol} {item.amount_raised.toLocaleString()}
+								{item.currency.symbol} {item.amount_raised?.toLocaleString() ?? 0}
 							</TableCell>
 							<TableCell>
 								<Badge className={getStatusColor(item.status)}>{item.status}</Badge>

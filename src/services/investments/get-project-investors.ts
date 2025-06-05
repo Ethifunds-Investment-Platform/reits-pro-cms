@@ -12,7 +12,7 @@ type Response = Investment[];
 
 export async function production(data: Parameters): Promise<Response> {
 	const response = await axios.get(
-		`/admin/investments/${data.investment_id}/investors?search=${data.search}`
+		`/investments/${data.investment_id}/investors?search=${data.search}`
 	);
 	return response.data.data;
 }

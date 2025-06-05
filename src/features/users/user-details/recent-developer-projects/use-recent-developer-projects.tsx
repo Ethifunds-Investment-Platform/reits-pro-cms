@@ -7,7 +7,7 @@ export default function useRecentDeveloperProjects() {
 	const developer_id = params.id as string;
 
 	const { data, isFetching, isError, error } = useQuery({
-		queryKey: ["recent-developer-projects"],
+		queryKey: ["recent-developer-projects", developer_id],
 		queryFn: () => getRecentDeveloperProjects({ developer_id }),
 	});
 

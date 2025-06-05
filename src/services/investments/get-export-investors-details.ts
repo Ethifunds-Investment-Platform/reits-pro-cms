@@ -8,7 +8,7 @@ type Parameters = {
 type Response = string;
 
 export async function production(data: Parameters): Promise<Response> {
-	const response = await axios.get(`/admin/investments/${data.investment_id}/investors/export`);
+	const response = await axios.get(`/investments/${data.investment_id}/investors/export`);
 	return response.data.data;
 }
 

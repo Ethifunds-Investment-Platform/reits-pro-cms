@@ -16,7 +16,7 @@ type Response = PaginatedResponse<Project>;
 
 export async function production(data: Parameters): Promise<Response> {
 	const queryString = buildQueryString(data);
-	const response = await axios.get(`/admin/investments?${queryString}`);
+	const response = await axios.get(`/investments?${queryString}`);
 	return response.data.data;
 }
 

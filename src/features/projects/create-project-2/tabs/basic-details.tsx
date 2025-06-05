@@ -9,7 +9,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { PROJECT_STATUS, PROJECT_TYPES } from "@/types/project.types";
+import { PROJECT_TYPES } from "@/types/project.types";
 import { TabsContent } from "@/components/ui/tabs";
 
 type ProjectFormBasicDetailsProps = {

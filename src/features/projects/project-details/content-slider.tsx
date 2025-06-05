@@ -31,7 +31,7 @@ export default function ContentSlider(props: Project) {
 										{Math.round(progress)}% Funded
 									</span>
 									<span className="text-sm text-gray-600">
-										{props.currency.symbol} {props.amount_raised.toLocaleString()}{" "}
+										{props.currency.symbol} {props?.amount_raised?.toLocaleString()??0}{" "}
 										{/* {figureConverter(props.amount_raised, {
 											currency: props.currency.code,
 										})}{" "} */}
@@ -84,7 +84,7 @@ export default function ContentSlider(props: Project) {
 
 							{props.total_investors > 0 && (
 								<Button className="w-full bg-navy-800 hover:bg-navy-700 text-white" asChild>
-									<Link to={`/projects/${props.id}/investors`}>
+									<Link to={`/investments/${props.id}/investors`}>
 										<Users className="h-4 w-4 text-gold-500 mr-1" />
 										View Investors
 									</Link>

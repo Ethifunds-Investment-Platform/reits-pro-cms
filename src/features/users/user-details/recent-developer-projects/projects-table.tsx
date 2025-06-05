@@ -70,7 +70,7 @@ export default function ProjectsTable({ isEmpty, data }: Props) {
 				<TableHeader>
 					<TableRow>
 						<TableHead>Project</TableHead>
-						<TableHead>Developer</TableHead>
+						{/* <TableHead>Developer</TableHead> */}
 						<TableHead>Target Amount</TableHead>
 						<TableHead>Raised</TableHead>
 						<TableHead>Status</TableHead>
@@ -84,7 +84,7 @@ export default function ProjectsTable({ isEmpty, data }: Props) {
 							<TableCell className="font-medium " title={item.name}>
 								{truncate(item.name, 25)}
 							</TableCell>
-							<TableCell title={item.developer.name}>{truncate(item.developer.name, 15)}</TableCell>
+							{/* <TableCell title={item.developer.name}>{truncate(item.developer.name, 15)}</TableCell> */}
 							<TableCell>
 								{item.currency.symbol} {item.funding_goal.toLocaleString()}
 							</TableCell>

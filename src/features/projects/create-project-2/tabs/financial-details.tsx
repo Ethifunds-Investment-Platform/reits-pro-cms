@@ -16,22 +16,12 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn, sanitizeNumInput, parseNumericInput } from "@/lib/utils";
 import { TabsContent } from "@/components/ui/tabs";
-import useAppSelector from "@/store/hooks";
 
 type ProjectFormFinancialDetailsProps = {
 	form: UseFormReturn<any>;
 };
 
 export default function ProjectFormFinancialDetails({ form }: ProjectFormFinancialDetailsProps) {
-	const { currencies } = useAppSelector("init");
-
-	const currencyOptions = currencies?.map((currency) => ({
-		title: `${currency.name} (${currency.symbol})`,
-		value: currency.id.toString(),
-	}));
-
-	
-
 	return (
 		<TabsContent value="financial">
 			<div className="space-y-6">
@@ -44,18 +34,17 @@ export default function ProjectFormFinancialDetails({ form }: ProjectFormFinanci
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>Currency*</FormLabel>
-								<Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
+								<Select onValueChange={field.onChange} defaultValue={field.value}>
 									<FormControl>
 										<SelectTrigger>
-											<SelectValue placeholder="Select currency"/>
+											<SelectValue placeholder="Select currency" />
 										</SelectTrigger>
 									</FormControl>
 									<SelectContent>
-										{currencyOptions?.map((option) => (
-											<SelectItem key={option.value} value={option.value}>
-												{option.title}
-											</SelectItem>
-										))}
+										<SelectItem value="1">Nigerian Naira (₦)</SelectItem>
+										<SelectItem value="2">US Dollar ($)</SelectItem>
+										<SelectItem value="3">Euro (€)</SelectItem>
+										<SelectItem value="4">British Pound (£)</SelectItem>
 									</SelectContent>
 								</Select>
 								<FormMessage />

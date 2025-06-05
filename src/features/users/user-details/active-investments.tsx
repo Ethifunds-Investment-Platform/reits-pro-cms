@@ -66,16 +66,18 @@ export default function ActiveInvestments({ isEmpty, data }: Props) {
 				<TableBody>
 					{data.map((item) => (
 						<TableRow key={item.id}>
-							<TableCell className="font-medium">{item.project.name}</TableCell>
+							<TableCell className="font-medium">{item?.project?.name}</TableCell>
 							<TableCell>
-								{item.project.location.state} {item.project.location.country}
+								{item?.project?.location?.state} {item?.project?.location?.country}
 							</TableCell>
 							<TableCell>
-								{item.project.currency.symbol} {item.amount_invested.toLocaleString()}
+								{item?.project?.currency?.symbol} {item?.amount_invested?.toLocaleString()}
 							</TableCell>
-							<TableCell>{item.project.expected_roi}</TableCell>
+							<TableCell>{item?.project?.expected_roi}</TableCell>
 							<TableCell>
-								<Badge className={getStatusColor(item.project.status)}>{item.project.status}</Badge>
+								<Badge className={getStatusColor(item?.project?.status)}>
+									{item?.project?.status}
+								</Badge>
 							</TableCell>
 							<TableCell className="text-right">
 								<DropdownMenu>

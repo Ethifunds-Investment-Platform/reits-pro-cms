@@ -30,7 +30,6 @@ export function useCreateProject() {
 				state: "",
 				fullAddress: "",
 			},
-			paystack_product_url: "",
 			risk_factors: "",
 			property_highlights: "",
 			currency_id: "",
@@ -75,7 +74,6 @@ export function useCreateProject() {
 					state: values.location.state,
 					fullAddress: values.location.fullAddress || "",
 				},
-				paystack_product_url: values.paystack_product_url,
 				risk_factors: riskFactors,
 				property_highlights: propertyHighlights,
 				currency_id: values.currency_id,
@@ -98,7 +96,7 @@ export function useCreateProject() {
 			const projectResponse = await createProject(formattedData);
 			if (projectResponse) {
 				toast.success("Project created successfully! Redirecting to project page...");
-				navigate(`/projects/${projectResponse.id}`);
+				navigate(`/developer/projects/${projectResponse.id}`);
 			}
 		} catch (error) {
 			const errMsg = ensureError(error).message;

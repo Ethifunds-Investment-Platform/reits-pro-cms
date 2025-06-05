@@ -9,7 +9,9 @@ type Parameters = {
 type Response = Project[];
 
 export async function production(data: Parameters): Promise<Response> {
-	const response = await axios.get(`/projects/developer/${data.developer_id}/recent`);
+	const response = await axios.get(`/developers/${data.developer_id}/projects/recent`, {
+		baseURL: `${variables.ACTIVE.base_url}/api/v1/`,
+	});
 	return response.data.data;
 }
 

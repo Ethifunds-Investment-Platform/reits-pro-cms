@@ -6,7 +6,7 @@ import { AdminUser } from "@/types/user.types";
 type Response = AdminUser;
 
 export async function production(): Promise<Response> {
-	const response = await axios.get(`/auth/me`);
+	const response = await axios.get(`/auth/whoami`);
 	return response.data.data;
 }
 

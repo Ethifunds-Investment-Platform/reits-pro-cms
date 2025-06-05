@@ -11,7 +11,7 @@ type Parameters = {
 type Response = void;
 
 export async function production(data: Parameters): Promise<Response> {
-	const response = await axios.patch(`/projects/${data.project_id}s`, {
+	const response = await axios.patch(`/projects/${data.project_id}/status`, {
 		status: data.status,
 		reason: data.reason,
 	});

@@ -1,9 +1,11 @@
 import useCustomNavigation from "@/hooks/use-navigation";
 import getAllUsers from "@/services/users/get-all-users";
+import useAppSelector from "@/store/hooks";
 import { useQuery } from "@tanstack/react-query";
 import * as React from "react";
 
 export default function useUsers() {
+	const {account}= useAppSelector("account")
 	const { queryParams } = useCustomNavigation();
 	const page = Number(queryParams.get("page") ?? 1);
 

@@ -5,6 +5,7 @@ import { Copy } from "lucide-react";
 import * as React from "react";
 
 export default function BankDetails(account: BankAccount) {
+	if (!account?.account_name) return null;
 	const copy = async () => {
 		try {
 			const text = `Bank Name: ${account.bank_name}\nAccount Name: ${account.account_name}\nAccount Number: ${account.account_number}`;

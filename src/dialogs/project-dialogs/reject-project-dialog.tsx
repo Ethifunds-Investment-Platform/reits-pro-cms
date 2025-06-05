@@ -55,7 +55,7 @@ export default React.memo(function RejectProjectDialog() {
 		try {
 			await updateProjectStatus({ project_id: id, status: "rejected" });
 			toast.success("Project rejected successfully");
-			queryClient.invalidateQueries({ queryKey: ["projects"] });
+			queryClient.invalidateQueries({ queryKey: ["projects", "recent-developer-projects"] });
 			close();
 		} catch (error) {
 			const errMsg = ensureError(error).message;

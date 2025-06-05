@@ -5,7 +5,9 @@ import { currencies } from "@/constants/data/currencies";
 type Response = Currency;
 
 export async function production(): Promise<Response> {
-	const response = await axios.get(`/active-currency`);
+	const response = await axios.get(`/active-currency`, {
+		baseURL: `${variables.ACTIVE.base_url}/api/v1/`,
+	});
 	return response.data.data;
 }
 
