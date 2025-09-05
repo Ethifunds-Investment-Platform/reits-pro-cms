@@ -12,7 +12,8 @@ type DialogType = "" |
 	"reject_project" |
 	"bulk_action" |
 	"project_update" |
-	"logout";
+	"logout" |
+	"disburse_funds";
 
 export type DialogPayload = {
 	id: string;

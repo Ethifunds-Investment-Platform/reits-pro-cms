@@ -70,7 +70,7 @@ export default function UsersTable({ isEmpty, data }: Props) {
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{data.map((user) => (
+					{data.filter(user => (user.role as any) !== "admin").map((user) => (
 						<TableRow key={user.id}>
 							<TableCell className="font-medium">{user.name}</TableCell>
 							<TableCell>{user.email}</TableCell>
