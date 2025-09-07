@@ -87,7 +87,7 @@ export type NewProject = {
 	maximum_investment: number;
 	tenor_unit: TenorUnit;
 	tenor_value: number;
-	paystack_product_url: string;
+	paystack_product_url?: string;
 	funding_deadline: string | null;
 	distribution_frequency: DistributionFrequency;
 	project_memo: string | null;
