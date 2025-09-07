@@ -10,6 +10,7 @@ export const PROJECT_STATUS = [
 	"completed",
 	"sold",
 	"active",
+	"disbursed",
 ] as const;
 
 export type ProjectStatus = (typeof PROJECT_STATUS)[number];

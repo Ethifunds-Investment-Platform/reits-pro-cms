@@ -7,7 +7,7 @@ import "./index.css";
 import store from "./store/index.ts";
 import { queryClientConfig } from "./config/query-client-config.ts";
 
-const queryClient = new QueryClient(queryClientConfig);
+export const queryClient = new QueryClient(queryClientConfig);
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>

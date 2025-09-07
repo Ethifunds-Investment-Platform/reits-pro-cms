@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Eye, MoreHorizontal, Users } from "lucide-react";
+import { Coins, Eye, MoreHorizontal, Users } from "lucide-react";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -20,6 +20,8 @@ import EmptyData from "@/components/app/empty-data";
 import { Link } from "react-router-dom";
 import { Project } from "@/types/project.types";
 import truncate from "@/lib/truncate";
+import useAppSelector from "@/store/hooks";
+import useActions from "@/store/actions";
 
 type Props = {
 	isEmpty: boolean;
@@ -27,6 +29,7 @@ type Props = {
 };
 
 export default function InvestmentsTable({ isEmpty, data }: Props) {
+	const { ui } = useActions();
 	if (isEmpty) {
 		return (
 			<EmptyData
@@ -35,6 +38,14 @@ export default function InvestmentsTable({ isEmpty, data }: Props) {
 			/>
 		);
 	}
+
+	const handleDisburseFunds = (project: Project) => {
+		ui.changeDialog({
+			show: true,
+			type: "disburse_funds",
+			data: { project },
+		});
+	};
 
 	const getStatusColor = (status: string) => {
 		switch (status) {
@@ -103,6 +114,15 @@ export default function InvestmentsTable({ isEmpty, data }: Props) {
 													<Users className="h-4 w-4 mr-2" />
 													View Investors
 												</Link>
+											</DropdownMenuItem>
+										)}
+
+										{item.status !== "disbursed" && (
+											<DropdownMenuItem asChild>
+												<Button variant={"ghost"} onClick={() => handleDisburseFunds(item)}>
+													<Coins className="h-4 w-4 mr-2" />
+													Disburse Funds
+												</Button>
 											</DropdownMenuItem>
 										)}
 									</DropdownMenuContent>
