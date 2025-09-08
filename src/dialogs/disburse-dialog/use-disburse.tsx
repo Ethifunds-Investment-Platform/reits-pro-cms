@@ -24,7 +24,7 @@ export default function useDisburse() {
 	const [otp, setOtp] = React.useState("");
 	const [otpSent, setOtpSent] = React.useState(false);
 	const { ui } = useActions();
-	const project_id = params.id as string;
+	
 
 	const project = useMemo(() => dialog.data?.project, [dialog.data?.project]);
 
@@ -66,7 +66,7 @@ export default function useDisburse() {
 
 			await disburseFundsOtp({
 				email: account?.email,
-				project_id,
+				project_id: project.id,
 			});
 			toast({
 				title: "Success",
@@ -86,6 +86,14 @@ export default function useDisburse() {
 	};
 
 	const onSubmit = async () => {
+		if (!project?.id) {
+			toast({
+				title: "Error",
+				description: "Project not found.",
+				variant: "destructive",
+			});
+			return;
+		}
 		const otp = form.getValues("otp");
 		if (!otpSent || !otp) {
 			await handleSendOtp();
@@ -113,7 +121,7 @@ export default function useDisburse() {
 			}
 
 			await disburseFunds({
-				project_id,
+				project_id: project.id,
 				rio: numericAmount,
 				otp,
 			});
