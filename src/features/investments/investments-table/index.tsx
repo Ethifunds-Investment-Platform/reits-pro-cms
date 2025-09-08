@@ -87,7 +87,7 @@ export default function InvestmentsTable({ isEmpty, data }: Props) {
 								{item.currency.symbol} {item.funding_goal.toLocaleString()}
 							</TableCell>
 							<TableCell>
-								{item.currency.symbol} {item.amount_raised.toLocaleString()}
+								{item.currency.symbol} {item.amount_raised?.toLocaleString()}
 							</TableCell>
 							<TableCell>
 								<Badge className={getStatusColor(item.status)}>{item.status}</Badge>
