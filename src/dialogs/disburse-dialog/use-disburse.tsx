@@ -176,6 +176,7 @@ export default function useDisburse() {
 		numericAmount,
 		setOtp,
 		otpSent,
+		otp,
 		validateOtp,
 		isLoading,
 	};

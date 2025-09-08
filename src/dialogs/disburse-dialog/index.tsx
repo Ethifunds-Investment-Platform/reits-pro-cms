@@ -15,6 +15,7 @@ export default function DisburseDialog() {
 		form,
 		isLoading,
 		setOtp,
+		otp,
 		otpSent,
 		validateOtp,
 	} = useDisburse();
@@ -64,7 +65,7 @@ export default function DisburseDialog() {
 								name="rio"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>RIO Amount ({project.currency.symbol})</FormLabel>
+										<FormLabel>RIO Amount (%)</FormLabel>
 										<FormControl>
 											<Input
 												{...field}
@@ -110,7 +111,7 @@ export default function DisburseDialog() {
 								className="w-full bg-navy-800 hover:bg-navy-700 text-white"
 								disabled={isLoading}
 							>
-								{otpSent ? "Disburse Funds" : "Send OTP"}
+								{!otpSent ? "Send OTP" : otpSent && !otp ? "Resend OTP" : "Disburse Funds"}
 							</Button>
 						</form>
 					</Form>
