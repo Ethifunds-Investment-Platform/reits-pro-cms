@@ -14,8 +14,12 @@ export default React.memo(function Updates(props: Project) {
 	const { ui } = useActions();
 	const isLoggedIn = !!account?.id;
 
-	const isAdmin = account?.role === props.developer_id;
-	const { data: updates, isFetching } = useQuery({
+	const isDeveloper = props.developer_id === account?.id;
+	const {
+		data: updates,
+		isFetching,
+		refetch,
+	} = useQuery({
 		queryKey: ["project-updates", props.id],
 		queryFn: () => getProjectUpdates({ project_id: props.id }),
 	});
@@ -24,6 +28,13 @@ export default React.memo(function Updates(props: Project) {
 		ui.changeDialog({
 			show: true,
 			type: "project_update",
+			data: { project_id: props.id },
+			action: async () => {
+				await refetch();
+				return;
+			},
+			dismiss: null,
+			id: "project-update",
 		});
 	};
 	return (
@@ -44,7 +55,7 @@ export default React.memo(function Updates(props: Project) {
 					<div className="space-y-5">
 						<div className="flex items-center justify-between">
 							<h2 className="text-xl font-semibold text-navy-800 mb-3">Recent Updates</h2>
-							{isAdmin && <Button onClick={click}>Upload Update</Button>}
+							{isDeveloper && <Button onClick={click}>Upload Update</Button>}
 						</div>
 
 						<Render isLoading={isFetching}>

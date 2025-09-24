@@ -17,7 +17,6 @@ export function useCreateProject() {
 	const [activeTab, setActiveTab] = useState("basic-details");
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const navigate = useNavigate();
-	 
 
 	const form = useForm<FormValues>({
 		resolver: zodResolver(projectFormSchema),
@@ -25,20 +24,19 @@ export function useCreateProject() {
 			name: "",
 			description: "",
 			type: "development" as ProjectType,
-			display_image: "",
+			display_image: undefined, // Will be set when file is selected
 			location: {
 				country: "",
 				state: "",
 				fullAddress: "",
 			},
-			paystack_product_url: "",
 			risk_factors: "",
 			property_highlights: "",
 			currency_id: "",
 			funding_goal: 0,
 			expected_roi: 0,
 			minimum_investment: 0,
-			maximum_investment: 0,
+			maximum_investment: null,
 			tenor_unit: "months" as TenorUnit,
 			tenor_value: 12,
 			distribution_frequency: "monthly" as DistributionFrequency,
@@ -52,11 +50,17 @@ export function useCreateProject() {
 			return;
 		}
 
+		// Validate that display image is selected
+		if (!values.display_image) {
+			toast.error("Please select a display image");
+			return;
+		}
+
 		setIsSubmitting(true);
 		try {
 			// Convert string fields to arrays
 			const riskFactors = values.risk_factors
-				.split(",")
+				?.split(",")
 				.map((item) => item.trim())
 				.filter(Boolean);
 
@@ -76,8 +80,7 @@ export function useCreateProject() {
 					state: values.location.state,
 					fullAddress: values.location.fullAddress || "",
 				},
-				paystack_product_url: values.paystack_product_url,
-				risk_factors: riskFactors,
+				risk_factors: riskFactors || [],
 				property_highlights: propertyHighlights,
 				currency_id: values.currency_id,
 				funding_goal: values.funding_goal,

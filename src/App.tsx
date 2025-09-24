@@ -24,6 +24,7 @@ import UserDetailsPage from "./pages/users/user-details";
 import CreateProjectPage from "./pages/projects/create-projects";
 import ProjectDetailsPage from "./pages/projects/project-details";
 import InvestorsPage from "./pages/investments/investors";
+import UpdateProjectPage from "./pages/projects/update";
 
 const App = () => {
 	useInit();
@@ -49,6 +50,7 @@ const App = () => {
 						<Route path="/projects" element={<ProjectsPage />} />
 						<Route path="/projects/:id" element={<ProjectDetailsPage />} />
 						<Route path="/projects/create" element={<CreateProjectPage />} />
+						<Route path="/projects/:id/update" element={<UpdateProjectPage />} />
 						<Route path="/users" element={<UsersPage />} />
 						<Route path="/users/:id" element={<UserDetailsPage />} />
 						<Route path="/investments" element={<InvestmentsPage />} />

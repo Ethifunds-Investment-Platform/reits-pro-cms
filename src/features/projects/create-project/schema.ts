@@ -16,29 +16,43 @@ export const projectFormSchema = z.object({
 		state: z.string().min(1, "State is required"),
 		fullAddress: z.string().optional(),
 	}),
-	paystack_product_url: z.string().min(1, "Paystack product URL is required"),
-	display_image: z.string().min(1, "Display image is required"),
-	images: z.array(z.string()).optional(),
-	risk_factors: z.string().min(1, "At least one risk factor is required"),
+	display_image: z.instanceof(File, { message: "Display image is required" }),
+	images: z.array(z.instanceof(File)).optional(),
+	risk_factors: z.string().optional(),
 	property_highlights: z.string().min(1, "At least one property highlight is required"),
 	currency_id: z.string().min(1, "Currency is required"),
 	funding_goal: z.number().positive("Funding goal must be a positive number"),
 	expected_roi: z.number().positive("Expected ROI must be a positive number"),
 	minimum_investment: z.number().positive("Minimum investment must be a positive number"),
-	maximum_investment: z.number().positive("Maximum investment must be a positive number"),
+	maximum_investment: z
+		.number()
+		// .negative("Maximum investment must be a positive number")
+		.nullable(),
 	tenor_unit: z.enum(TENOR_UNITS as unknown as [string, ...string[]], {
 		message: "Tenor unit is required",
 	}),
 	tenor_value: z.number().positive("Tenor value must be a positive number"),
-	funding_deadline: z.string().nullable().optional(),
+	funding_deadline: z.string().min(1, "Funding deadline is required"),
 	distribution_frequency: z.enum(DISTRIBUTION_FREQUENCIES as unknown as [string, ...string[]], {
 		message: "Distribution frequency is required",
 	}),
 	type: z.enum(PROJECT_TYPES as unknown as [string, ...string[]], {
 		message: "Type is required",
 	}),
-	project_memo: z.string().nullable().optional(),
-	developer_track_record: z.string().nullable().optional(),
-	market_analysis: z.string().nullable().optional(),
-	financial_projections: z.string().nullable().optional(),
+	project_memo: z
+		.union([z.string(), z.instanceof(File)])
+		.nullable()
+		.optional(),
+	developer_track_record: z
+		.union([z.string(), z.instanceof(File)])
+		.nullable()
+		.optional(),
+	market_analysis: z
+		.union([z.string(), z.instanceof(File)])
+		.nullable()
+		.optional(),
+	financial_projections: z
+		.union([z.string(), z.instanceof(File)])
+		.nullable()
+		.optional(),
 });

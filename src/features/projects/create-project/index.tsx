@@ -5,11 +5,7 @@ import AppContainer from "@/components/app/container/container";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
-	FormMessage,
-	FormLabel,
-	FormItem,
-	FormField,
-	FormControl,
+
 } from "@/components/ui/form";
 import { Link } from "react-router-dom";
 import ProjectFormBasicDetails from "./tabs/basic-details";
@@ -64,11 +60,6 @@ export default function CreateProject() {
 				<Form {...form}>
 					<form id="project-form" onSubmit={form.handleSubmit(handleSubmit)}>
 						<div className="flex justify-between px-5 pt-3">
-							<Input
-								placeholder="Enter Paystack product URL here"
-								{...form.register("paystack_product_url")}
-								className="w-1/3"
-							/>
 							{/* <Input
 								placeholder="Enter Paystack product URL here"
 								{...form.register("paystack_product_url")}

@@ -1,10 +1,9 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Project } from "@/types/project.types";
 import { Calendar, CircleDollarSign, Percent } from "lucide-react";
 import { Users } from "lucide-react";
-import { Link } from "react-router-dom";
+
 
 export default function ContentSlider(props: Project) {
 	const progress = (props.amount_raised / props.funding_goal) * 100;
@@ -31,7 +30,7 @@ export default function ContentSlider(props: Project) {
 										{Math.round(progress)}% Funded
 									</span>
 									<span className="text-sm text-gray-600">
-										{props.currency.symbol} {props?.amount_raised?.toLocaleString()??0}{" "}
+										{props.currency.symbol} {props?.amount_raised?.toLocaleString()}{" "}
 										{/* {figureConverter(props.amount_raised, {
 											currency: props.currency.code,
 										})}{" "} */}
@@ -65,10 +64,10 @@ export default function ContentSlider(props: Project) {
 
 								<div>
 									<p className="text-sm text-gray-600">Target Return</p>
-									<div className="flex items-start">
+									<div className="flex items-center">
 										<Percent className="h-4 w-4 text-gold-500 mr-1" />
 										<span className="font-semibold text-navy-800">
-											{props.expected_roi} Annually
+											{props.expected_roi}% Annually
 										</span>
 									</div>
 								</div>
@@ -82,14 +81,15 @@ export default function ContentSlider(props: Project) {
 								</div>
 							</div>
 
-							{props.total_investors > 0 && (
-								<Button className="w-full bg-navy-800 hover:bg-navy-700 text-white" asChild>
-									<Link to={`/investments/${props.id}/investors`}>
-										<Users className="h-4 w-4 text-gold-500 mr-1" />
-										View Investors
-									</Link>
-								</Button>
-							)}
+							{/* <Button className="w-full bg-navy-800 hover:bg-navy-700 text-white">
+								Invest Now
+							</Button>
+
+							<p className="text-xs text-gray-500 text-center">
+								{property.fundingProgress < 100
+									? `${100 - property.fundingProgress}% still available. Closing soon.`
+									: "This offering is fully funded."}
+							</p> */}
 						</div>
 					</CardContent>
 				</Card>

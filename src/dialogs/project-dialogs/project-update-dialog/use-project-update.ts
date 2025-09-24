@@ -105,9 +105,16 @@ export default function useProjectUpdate() {
 			const validatedData = updateValidation.parse({
 				...formData,
 				project_id: dialog?.data?.project_id || formData.project_id,
+
 			});
 
-			await createProjectUpdate(validatedData as Required<typeof validatedData>);
+			const payload = {
+				title: validatedData.title,
+				content: validatedData.content,
+				project_id: validatedData.project_id,
+			};
+
+			await createProjectUpdate(payload);
 			toast.success("Project update created successfully");
 			close();
 
