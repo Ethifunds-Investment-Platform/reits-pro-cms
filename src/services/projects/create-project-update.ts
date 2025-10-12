@@ -27,7 +27,7 @@ export async function development(data: Parameters): Promise<Response> {
 					project_id: data.project_id,
 					title: data.title,
 					content: data.content,
-					images: data.images || [],
+					images: [],
 					created_at: new Date().toISOString(),
 				}),
 			1000

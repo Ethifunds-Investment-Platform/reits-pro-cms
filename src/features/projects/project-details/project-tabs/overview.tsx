@@ -6,9 +6,9 @@ import * as React from "react";
 export default React.memo(function Overview(props: Project) {
 	const isCompleted = props.status === "completed";
 	const fullAddress = mergeText(
-		props?.location?.fullAddress ?? "",
-		props?.location?.state ?? "",
-		props?.location?.country ?? ""
+		props.location?.fullAddress ?? "",
+		props.location.state,
+		props.location.country
 	).replace(" ", ",");
 	return (
 		<TabsContent value="overview">
