@@ -21,10 +21,10 @@ const SOCKET = "";
 const SOCKET_URL = ``;
 
 const STORAGE: StorageKeys = {
-	email: "_et_email",
-	session: "_et_session",
-	remember_me: "_et_rme",
-	currency: "_et_currency",
+	email: "_et_cms_email",
+	session: "_et_cms_session",
+	remember_me: "_et_cms_rme",
+	currency: "_et_cms_currency",
 };
 
 const ACTIVE: EnvironmentVariables = {

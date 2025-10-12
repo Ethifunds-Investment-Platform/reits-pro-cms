@@ -111,7 +111,7 @@ export default function DisburseDialog() {
 								className="w-full bg-navy-800 hover:bg-navy-700 text-white"
 								disabled={isLoading}
 							>
-								{!otpSent ? "Send OTP" : otpSent && !otp ? "Resend OTP" : "Disburse Funds"}
+								{!otpSent ? "Send OTP" : otpSent && otp.length < 6 ? "Resend OTP" : "Disburse Funds"}
 							</Button>
 						</form>
 					</Form>
