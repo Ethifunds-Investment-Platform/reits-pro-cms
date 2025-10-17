@@ -4,7 +4,7 @@ import axios from "@/lib/axios";
 type Parameters = {
 	project_id: string;
 	rio: number;
-	otp: string;
+	pin: string;
 };
 
 type Response = void;

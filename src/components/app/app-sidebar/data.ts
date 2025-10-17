@@ -55,9 +55,9 @@ export const sidebarLinks: SidebarLink[] = [
 	// 	path: "/analytics",
 	// 	icon: IconContainer(BarChart3),
 	// },
-	// {
-	// 	name: "Settings",
-	// 	path: "/settings",
-	// 	icon: IconContainer(Settings),
-	// },
+	{
+		name: "Settings",
+		path: "/settings",
+		icon: IconContainer(Settings),
+	},
 ];

@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import AppDialog from "@/components/app/app-dialog";
 import useDisburse from "./use-disburse";
 import ErrorBoundary from "@/components/app/error-boundary";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Link } from "react-router-dom";
 
 export default function DisburseDialog() {
 	const {
@@ -14,10 +16,8 @@ export default function DisburseDialog() {
 		project,
 		form,
 		isLoading,
-		setOtp,
-		otp,
-		otpSent,
-		validateOtp,
+		validatePin,
+		hasPin,
 	} = useDisburse();
 
 	return (
@@ -58,43 +58,50 @@ export default function DisburseDialog() {
 						</div>
 					</div>
 
-					<Form {...form}>
-						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-							<FormField
-								control={form.control}
-								name="rio"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>RIO Amount (%)</FormLabel>
-										<FormControl>
-											<Input
-												{...field}
-												placeholder="Enter rio "
-												onChange={(e) => formatAmount(e)}
-												// className="text-right"
-												disabled={isLoading}
-												type="number"
-												max={100}
-												inputMode="numeric"
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-
-							{otpSent && (
+					{!hasPin ? (
+						<Alert variant="destructive">
+							<AlertDescription>
+								You need to set up a PIN before you can disburse funds.{" "}
+								<Link to="/settings" className="underline font-medium" onClick={handleClose}>
+									Go to Settings
+								</Link>
+							</AlertDescription>
+						</Alert>
+					) : (
+						<Form {...form}>
+							<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 								<FormField
 									control={form.control}
-									name="otp"
+									name="rio"
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>OTP</FormLabel>
+											<FormLabel>RIO Amount (%)</FormLabel>
 											<FormControl>
 												<Input
 													{...field}
-													placeholder="Enter otp "
-													onChange={(e) => validateOtp(e)}
-													// className="text-right"
+													placeholder="Enter rio "
+													onChange={(e) => formatAmount(e)}
+													disabled={isLoading}
+													type="number"
+													max={100}
+													inputMode="numeric"
+												/>
+											</FormControl>
+										</FormItem>
+									)}
+								/>
+
+								<FormField
+									control={form.control}
+									name="pin"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>PIN</FormLabel>
+											<FormControl>
+												<Input
+													{...field}
+													placeholder="Enter your 6-digit PIN"
+													onChange={(e) => validatePin(e)}
 													disabled={isLoading}
 													inputMode="numeric"
 													type="password"
@@ -104,17 +111,17 @@ export default function DisburseDialog() {
 										</FormItem>
 									)}
 								/>
-							)}
 
-							<Button
-								type="submit"
-								className="w-full bg-navy-800 hover:bg-navy-700 text-white"
-								disabled={isLoading}
-							>
-								{!otpSent ? "Send OTP" : otpSent && otp.length < 6 ? "Resend OTP" : "Disburse Funds"}
-							</Button>
-						</form>
-					</Form>
+								<Button
+									type="submit"
+									className="w-full bg-navy-800 hover:bg-navy-700 text-white"
+									disabled={isLoading}
+								>
+									{isLoading ? "Disbursing..." : "Disburse Funds"}
+								</Button>
+							</form>
+						</Form>
+					)}
 				</div>
 			</AppDialog>
 		</ErrorBoundary>
