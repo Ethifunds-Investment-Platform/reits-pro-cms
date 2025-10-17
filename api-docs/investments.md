@@ -152,3 +152,95 @@ Exports detailed information about investors for a specific investment project.
 	"data": "export_url_string"
 }
 ```
+
+---
+
+## Disburse Funds
+
+### POST /investments/disburse
+
+Disburses funds for a specific investment project. Requires admin authentication and PIN verification.
+
+**Authentication Required:** Yes (Bearer token)
+
+**PIN Verification Required:** Yes
+
+**Request Body:**
+
+```json
+{
+	"project_id": "proj_123",
+	"rio": 15,
+	"pin": "123456"
+}
+```
+
+**Request Parameters:**
+- `project_id` (string, required): The ID of the project to disburse funds for
+- `rio` (number, required): Return on Investment percentage to disburse (0-100)
+- `pin` (string, required): Admin's 6-digit PIN for verification
+
+**Validation Rules:**
+- Admin must have a PIN set (`has_pin: true`)
+- `pin`: Must be exactly 6 numeric digits
+- `pin`: Must match the admin's current PIN
+- `rio`: Must be a positive number, typically 0-100
+- `project_id`: Must be a valid project ID
+
+**Response (200 OK):**
+
+```json
+{
+	"data": {
+		"message": "Funds disbursed successfully",
+		"disbursement_id": "disb_123",
+		"project_id": "proj_123",
+		"rio_amount": 15,
+		"disbursed_at": "2024-03-15T10:00:00Z"
+	}
+}
+```
+
+**Error Responses:**
+
+**400 Bad Request** - Validation error:
+```json
+{
+	"error": {
+		"message": "PIN must be exactly 6 digits"
+	}
+}
+```
+
+**401 Unauthorized** - Invalid PIN:
+```json
+{
+	"error": {
+		"message": "Invalid PIN"
+	}
+}
+```
+
+**403 Forbidden** - No PIN set:
+```json
+{
+	"error": {
+		"message": "PIN not set. Please set up a PIN in Settings before disbursing funds"
+	}
+}
+```
+
+**404 Not Found** - Project not found:
+```json
+{
+	"error": {
+		"message": "Project not found"
+	}
+}
+```
+
+**Notes:**
+- The admin must first set up a PIN in Settings before being able to disburse funds
+- PIN verification is required for each disbursement operation
+- Failed PIN attempts should be logged and rate-limited
+- Consider implementing additional security measures such as IP verification or 2FA

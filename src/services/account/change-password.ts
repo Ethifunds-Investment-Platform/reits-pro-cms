@@ -2,24 +2,28 @@ import { variables } from "@/constants";
 import axios from "@/lib/axios";
 
 type Parameters = {
-	email: string;
-	project_id: string;
+	current_password: string;
+	new_password: string;
 };
 
-type Response = void;
+type Response = {
+	message: string;
+};
 
 export async function production(data: Parameters): Promise<Response> {
-	const response = await axios.post(`/investments/disburse/otp`, data);
+	const response = await axios.post("/auth/account/password/change", data);
 	return response.data.data;
 }
 
 export async function development(): Promise<Response> {
 	return new Promise((resolve) => {
-		setTimeout(() => resolve(), 1000);
+		setTimeout(() => {
+			resolve({ message: "Password changed successfully" });
+		}, 1000);
 	});
 }
 
-export default async function disburseFundsOtp(data: Parameters): Promise<Response> {
+export default async function changePassword(data: Parameters): Promise<Response> {
 	if (variables.NODE_ENV === "development") return development();
 	return production(data);
 }

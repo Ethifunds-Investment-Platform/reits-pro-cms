@@ -7,13 +7,12 @@ import useCustomNavigation from "@/hooks/use-navigation";
 import { toast } from "@/hooks/use-toast";
 import { useMemo } from "react";
 import ensureError from "@/lib/ensure-error";
-import disburseFundsOtp from "@/services/investments/disburse-funds-otp";
 import disburseFunds from "@/services/investments/disburse-funds";
 import { queryClient } from "@/main";
 
 type InvestFormValues = {
 	rio: string;
-	otp: string;
+	pin: string;
 };
 
 export default function useDisburse() {
@@ -21,17 +20,15 @@ export default function useDisburse() {
 	const { account } = useAppSelector("account");
 	const { queryParams, params } = useCustomNavigation();
 	const [isLoading, setIsLoading] = React.useState(false);
-	const [otp, setOtp] = React.useState("");
-	const [otpSent, setOtpSent] = React.useState(false);
 	const { ui } = useActions();
-	
 
+	const hasPin = account?.has_pin || false;
 	const project = useMemo(() => dialog.data?.project, [dialog.data?.project]);
 
 	const form = useForm<InvestFormValues>({
 		defaultValues: {
 			rio: "",
-			otp: "",
+			pin: "",
 		},
 	});
 
@@ -47,43 +44,8 @@ export default function useDisburse() {
 
 	const handleClose = React.useCallback(() => {
 		ui.resetDialog();
-		setOtp("");
-		setOtpSent(false);
 		form.reset();
 	}, [ui]);
-
-	const handleSendOtp = async () => {
-		try {
-			if (!account?.email) {
-				toast({
-					title: "Error",
-					description: "You need to be signed in to send an OTP.",
-					variant: "destructive",
-				});
-				return;
-			}
-			setIsLoading(true);
-
-			await disburseFundsOtp({
-				email: account?.email,
-				project_id: project.id,
-			});
-			toast({
-				title: "Success",
-				description: "OTP sent to your email.",
-			});
-			setOtpSent(true);
-		} catch (error) {
-			const err = ensureError(error);
-			toast({
-				title: "Error",
-				description: err.message,
-				variant: "destructive",
-			});
-		} finally {
-			setIsLoading(false);
-		}
-	};
 
 	const onSubmit = async () => {
 		if (!project?.id) {
@@ -94,16 +56,21 @@ export default function useDisburse() {
 			});
 			return;
 		}
-		const otp = form.getValues("otp");
-		if (!otpSent || !otp) {
-			await handleSendOtp();
+
+		if (!hasPin) {
+			toast({
+				title: "Error",
+				description: "You need to set up a PIN before you can disburse funds.",
+				variant: "destructive",
+			});
 			return;
 		}
 
-		if (otp.length !== 6) {
+		const pin = form.getValues("pin");
+		if (!pin || pin.length !== 6) {
 			toast({
 				title: "Error",
-				description: "OTP must be 6 digits.",
+				description: "PIN must be exactly 6 digits.",
 				variant: "destructive",
 			});
 			return;
@@ -114,7 +81,7 @@ export default function useDisburse() {
 			if (!account?.id) {
 				toast({
 					title: "Error",
-					description: "You need to be signed in to make an investment.",
+					description: "You need to be signed in to disburse funds.",
 					variant: "destructive",
 				});
 				return;
@@ -123,7 +90,7 @@ export default function useDisburse() {
 			await disburseFunds({
 				project_id: project.id,
 				rio: numericAmount,
-				otp,
+				pin,
 			});
 			toast({
 				title: "Success",
@@ -156,14 +123,17 @@ export default function useDisburse() {
 		}
 	};
 
-	const validateOtp = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const validatePin = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = sanitizeNumInput(e.target.value, false);
 		if (value === "") {
-			form.setValue("otp", "");
+			form.setValue("pin", "");
 			return;
 		}
 
-		form.setValue("otp", value);
+		// Limit to 6 digits
+		if (value.length <= 6) {
+			form.setValue("pin", value);
+		}
 	};
 
 	return {
@@ -174,10 +144,8 @@ export default function useDisburse() {
 		onSubmit,
 		formatAmount,
 		numericAmount,
-		setOtp,
-		otpSent,
-		otp,
-		validateOtp,
+		validatePin,
 		isLoading,
+		hasPin,
 	};
 }

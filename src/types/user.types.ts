@@ -24,6 +24,7 @@ export type AdminUser = {
 	email: string;
 	name: string;
 	role: "admin";
+	has_pin: boolean;
 	created_at: string;
 	updated_at: string;
 };
